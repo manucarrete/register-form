@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Formulario multi-paso</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
+<body>
+    <div class="container col-3 p-2">
+        <div class="row justify-content-center">
+            <div class="shadow p-3 mb-5 bg-body rounded">
+                <form id="formRegistro">
+                    <!-- Paso 1: Nombre y Email -->
+                    <div class="paso" data-paso="1">
+                        <h2>Paso 1</h2>
+                        <div class="input-group p-2">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Email" required />
+                        </div>
+                        <div class="input-group p-2">
+                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre y apellidos" required />
+                        </div>
+                        <div class="d-flex p-2 justify-content-between">
+                            <button class="btn btn-outline-primary btn-sm btn-anterior disabled">Anterior</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm btn-siguiente">Siguiente</button>
+                        </div>
+                    </div>
+
+                    <!-- Paso 2: Teléfono y Servicio -->
+                    <div class="paso" data-paso="2" style="display: none;">
+                        <h2>Paso 2</h2>
+                        <div class="input-group p-2">
+                            <input type="tel" class="form-control" name="telefono" id="telefono" placeholder="Teléfono" required />
+                        </div>
+                        <div class="input-group p-2">
+                            <select class="form-control" name="servicio" id="servicio" required>
+                                <option value="">Seleccione un servicio</option>
+                                <option value="basico">Básico</option>
+                                <option value="completo">Completo</option>
+                            </select>
+                        </div>
+                        <div class="d-flex p-2 justify-content-between">
+                            <button type="button" class="btn btn-outline-primary btn-sm btn-anterior">Anterior</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm btn-siguiente">Siguiente</button>
+                        </div>
+                    </div>
+
+                    <!-- Paso 3: Urgencia del Servicio -->
+                    <div class="paso" data-paso="3" style="display: none;">
+                        <h2>Paso 3</h2>
+                        <div class="input-group p-2">
+                            <label>Urgencia del servicio:</label>
+                            <div>
+                                <input type="radio" id="urgencia_baja" name="urgencia" value="baja" required />
+                                <label for="urgencia_baja">Baja</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="urgencia_media" name="urgencia" value="media" />
+                                <label for="urgencia_media">Media</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="urgencia_alta" name="urgencia" value="alta" />
+                                <label for="urgencia_alta">Alta</label>
+                            </div>
+                        </div>
+                        <div class="d-flex p-2 justify-content-between">
+                            <button type="button" class="btn btn-outline-primary btn-sm btn-anterior">Anterior</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm btn-siguiente">Siguiente</button>
+                        </div>
+                    </div>
+
+                    <!-- Paso 4: Finalizar y calcular presupuesto -->
+                    <div class="paso" data-paso="4" style="display: none;">
+                        <h2>Paso 4</h2>
+                        <p>Revise sus datos y haga clic en "Finalizar" para ver el presupuesto.</p>
+                        <div class="d-flex p-2 justify-content-between">
+                            <button type="button" class="btn btn-outline-primary btn-sm btn-anterior">Anterior</button>
+                            <button type="submit" class="btn btn-outline-success btn-sm">Finalizar</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="">
+                    <div class="row p-0 m-2 progress rounded-0">
+                        <div class="progress-bar progress-bar-striped h-100 rounded-2" role="progressbar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
