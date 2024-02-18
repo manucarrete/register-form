@@ -9,82 +9,114 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 </head>
 <body>
-    <div class="container col-3 p-2">
+    <div class="container col-md-6 p-5">
         <div class="row justify-content-center">
             <div class="shadow p-3 mb-5 bg-body rounded">
                 <form id="formRegistro">
-                    <!-- Paso 1: Nombre y Email -->
                     <div class="paso" data-paso="1">
-                        <h2>Paso 1</h2>
-                        <div class="input-group p-2">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Email" required />
+                        <h2>Información personal</h2>
+                        <br>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
                         </div>
-                        <div class="input-group p-2">
-                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre y apellidos" required />
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                         </div>
-                        <div class="d-flex p-2 justify-content-between">
-                            <button class="btn btn-outline-primary btn-sm btn-anterior disabled">Anterior</button>
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Teléfono:</label>
+                            <input type="tel" pattern="[0-9]{9}" class="form-control" id="telefono" placeholder="Teléfono" name="telefono" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tipo de cliente:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="tipoCliente" id="empresa" value="empresa" required>
+                                <label class="form-check-label" for="empresa">
+                                    Empresa
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="tipoCliente" id="particular" value="particular">
+                                <label class="form-check-label" for="particular">
+                                    Particular
+                                </label>
+                            </div>
+                        </div>                        
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-outline-primary btn-sm btn-anterior disabled">Anterior</button>
                             <button type="button" class="btn btn-outline-primary btn-sm btn-siguiente">Siguiente</button>
                         </div>
                     </div>
 
-                    <!-- Paso 2: Teléfono y Servicio -->
-                    <div class="paso" data-paso="2" style="display: none;">
-                        <h2>Paso 2</h2>
-                        <div class="input-group p-2">
-                            <input type="tel" class="form-control" name="telefono" id="telefono" placeholder="Teléfono" required />
-                        </div>
-                        <div class="input-group p-2">
-                            <select class="form-control" name="servicio" id="servicio" required>
-                                <option value="">Seleccione un servicio</option>
-                                <option value="basico">Básico</option>
-                                <option value="completo">Completo</option>
+                    <div class="paso" data-paso="2">
+                        <h2>Selección de servicio y complementos</h2>
+                        <div class="mb-3">
+                            <label for="servicio" class="form-label">Servicio:</label>
+                            <select class="form-select" id="servicio" name="servicio" required>
+                                <option value="" disabled selected >Seleccione un servicio</option>
+                                <option value="mantenimiento">Mantenimiento</option>
+                                <option value="continuar">Continuar aplicación</option>
+                                <option value="desdeCero">Aplicación completa desde 0</option>
                             </select>
                         </div>
-                        <div class="d-flex p-2 justify-content-between">
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hosting" name="hosting">
+                                <label class="form-check-label" for="hosting">
+                                    Hosting
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="dominio" name="dominio">
+                                <label class="form-check-label" for="dominio">
+                                    Dominio
+                                </label>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
                             <button type="button" class="btn btn-outline-primary btn-sm btn-anterior">Anterior</button>
                             <button type="button" class="btn btn-outline-primary btn-sm btn-siguiente">Siguiente</button>
                         </div>
                     </div>
 
-                    <!-- Paso 3: Urgencia del Servicio -->
-                    <div class="paso" data-paso="3" style="display: none;">
-                        <h2>Paso 3</h2>
-                        <div class="input-group p-2">
-                            <label>Urgencia del servicio:</label>
-                            <div>
-                                <input type="radio" id="urgencia_baja" name="urgencia" value="baja" required />
-                                <label for="urgencia_baja">Baja</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="urgencia_media" name="urgencia" value="media" />
-                                <label for="urgencia_media">Media</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="urgencia_alta" name="urgencia" value="alta" />
-                                <label for="urgencia_alta">Alta</label>
-                            </div>
+                    <div class="paso" data-paso="3">
+                        <h2>Tecnologías</h2>
+                        <div class="mb-3">
+                            <label for="fechaInicio" class="form-label">Fecha de limite deseada:</label>
+                            <input type="date" class="form-control" id="fecha" name="fecha">
                         </div>
-                        <div class="d-flex p-2 justify-content-between">
+                        <div class="mb-3">
+                            <label for="tecnologia" class="form-label">Tecnologías preferentes:</label>
+                            <select class="form-select" id="tecnologia" name="tecnologia" multiple>
+                                <option value="react">React</option>
+                                <option value="angular">Angular</option>
+                                <option value="spring">Spring</option>
+                                <option value="nodejs">Node.js</option>
+                            </select>
+                            <small class="text-muted">Mantén presionado Ctrl (Cmd en Mac) para seleccionar múltiples opciones.</small>
+                        </div>
+                        <div class="d-flex justify-content-between">
                             <button type="button" class="btn btn-outline-primary btn-sm btn-anterior">Anterior</button>
                             <button type="button" class="btn btn-outline-primary btn-sm btn-siguiente">Siguiente</button>
                         </div>
                     </div>
 
-                    <!-- Paso 4: Finalizar y calcular presupuesto -->
-                    <div class="paso" data-paso="4" style="display: none;">
-                        <h2>Paso 4</h2>
-                        <p>Revise sus datos y haga clic en "Finalizar" para ver el presupuesto.</p>
-                        <div class="d-flex p-2 justify-content-between">
+                    <div class="paso" data-paso="4">
+                        <h2>Observaciones y finalización</h2>
+                        <div class="mb-3">
+                            <label for="observaciones" class="form-label">Observaciones (opcional):</label>
+                            <textarea class="form-control" id="observaciones" name="observaciones"></textarea>
+                        </div>
+                        <div class="d-flex justify-content-between">
                             <button type="button" class="btn btn-outline-primary btn-sm btn-anterior">Anterior</button>
-                            <button type="submit" class="btn btn-outline-success btn-sm">Finalizar</button>
+                            <button type="button" class="btn btn-outline-success btn-sm btn-finalizar">Finalizar</button>
                         </div>
                     </div>
+
                 </form>
-                <div class="">
-                    <div class="row p-0 m-2 progress rounded-0">
-                        <div class="progress-bar progress-bar-striped h-100 rounded-2" role="progressbar" style="width: 0%"></div>
-                    </div>
+                <div class="progress mt-3">
+                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
         </div>

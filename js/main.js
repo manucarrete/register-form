@@ -1,103 +1,125 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const formulario = document.getElementById("formRegistro");
     const pasos = document.querySelectorAll(".paso");
     const botonesSiguiente = document.querySelectorAll(".btn-siguiente");
-    const progressBar = document.querySelector(".progress-bar")
     const botonesAnterior = document.querySelectorAll(".btn-anterior");
+    const botonFinalizar = document.querySelector(".btn-finalizar");
+    const progressBar = document.querySelector(".progress-bar");
     let pasoActual = 1;
 
-
+    // Actualizar la barra de progreso
     function actualizarBarraDeProgreso() {
         const progreso = ((pasoActual - 1) / (pasos.length - 1)) * 100;
         console.log(progreso);
-        progressBar.style = `width: ${progreso}%`
+        progressBar.style.width = `${progreso}%`;
     }
 
-    function pasoAnterior() {
-        pasos[pasoActual - 1].style.display = "none";
-        pasoActual--;
-        if (pasoActual < 1) {
-            pasoActual = 1;
-        }
-        pasos[pasoActual - 1].style.display = "block";
+    // Mostrar el paso actual
+    function mostrarPaso() {
+        pasos.forEach((paso, index) => {
+            paso.style.display = index === pasoActual - 1 ? "block" : "none";
+        });
         actualizarBarraDeProgreso();
     }
 
-    botonesSiguiente.forEach((boton) => {
-        boton.addEventListener("click", siguientePaso);
-    });
+    // Validar campos del paso actual
+    function validarCampos() {
+        if (pasoActual === 1) {
+            const nombre = document.getElementById('nombre').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const regexTelefono = /^\d{7,14}$/;
 
-    botonesAnterior.forEach((boton) => {
-        boton.addEventListener("click", pasoAnterior);
-    });
+            if (!nombre || !regexEmail.test(email) || !regexTelefono.test(telefono) || !validarTipoCliente() ) {
+                alert("Por favor, completa todos los campos con información válida.");
+                return false;
+            }
+        }
+        return true;
+    }
+    // Fui incapaz de validad directamente con bootstrap o con querySelector, por eso lo hago individual
+    function validarTipoCliente() {
+        var radios = document.getElementsByName('tipoCliente');
+        var seleccionado = false;
 
-    formulario.addEventListener("submit", (e) => e.preventDefault());
-
-    function validarPasoActual() {
-        const paso = document.querySelector('.paso[data-paso="' + pasoActual + '"]');
-        const inputs = paso.querySelectorAll('input[required], select[required]');
-        let esValido = true;
-        inputs.forEach(input => {
-            if (!input.value.trim()) {
-                input.classList.add('is-invalid');
-                esValido = false;
-            } else {
-                input.classList.remove('is-invalid');
+        for(var i = 0; i < radios.length; i++) {
+            if(radios[i].checked) {
+                seleccionado = true; 
+            }
+        }
+        return seleccionado;    
+    }
+    
+    // Navegación entre pasos
+    botonesSiguiente.forEach(boton => {
+        boton.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (pasoActual == 2) {
+                const servicioSeleccionado = document.getElementById('servicio').value;
+                if (!servicioSeleccionado) {
+                    alert("Por favor, selecciona un servicio.");
+                    return;
+                }
+            } 
+            if (validarCampos()) {
+                pasoActual++;
+                if (pasoActual > pasos.length) {
+                    pasoActual = pasos.length;
+                }
+                mostrarPaso();
             }
         });
-
-        // Validación específica para email
-        const email = paso.querySelector('input[type="email"]');
-        if (email && !email.value.includes('@')) {
-            email.classList.add('is-invalid');
-            esValido = false;
-        } else {
-            email?.classList.remove('is-invalid');
-        }
-
-        // Validación específica para teléfono
-        const telefono = paso.querySelector('input[type="tel"]');
-        if (telefono && !/^\d{9}$/.test(telefono.value)) {
-            telefono.classList.add('is-invalid');
-            esValido = false;
-        } else {
-            telefono?.classList.remove('is-invalid');
-        }
-
-        return esValido;
-    }
-
-    function siguientePaso() {
-        if (!validarPasoActual()) return;
-        pasos[pasoActual - 1].style.display = "none";
-        pasoActual++;
-        if (pasoActual > pasos.length) {
-            pasoActual = pasos.length;
-        }
-        pasos[pasoActual - 1].style.display = "block";
-        actualizarBarraDeProgreso();
-    }
-
-    formulario.addEventListener("submit", (e) => {
-        e.preventDefault();
-        if (!validarPasoActual()) return;
-
-        // Aquí puedes añadir el cálculo del presupuesto basado en las selecciones
-        calcularPresupuesto();
     });
 
+    botonesAnterior.forEach(boton => {
+        boton.addEventListener("click", function (e) {
+            e.preventDefault();
+            pasoActual--;
+            if (pasoActual < 1) {
+                pasoActual = 1;
+            }
+            mostrarPaso();
+        });
+    });
+
+    // Calcular y mostrar el presupuesto
     function calcularPresupuesto() {
-        // Implementa tu lógica de cálculo aquí
-        // Por ejemplo, basado en el servicio seleccionado y la urgencia
-        let presupuesto = 100; // Base
+        const tipoCliente = document.querySelector('input[name="tipoCliente"]:checked').value;
+        console.log
+        const servicioSeleccionado = document.getElementById('servicio').value;
+        const hosting = document.getElementById('hosting').checked;
+        const dominio = document.getElementById('dominio').checked;
+        
+        let costoBase = 0;
+        switch (servicioSeleccionado) {
+            case 'mantenimiento': costoBase = 1000;
+                break;
+            case 'continuar': costoBase = 2000;
+                break;
+            case 'desdeCero': costoBase = 3000;
+                break;
+        }
+        
+        let costoComplementos = 0;
+        if (hosting) costoComplementos += 300;
+        if (dominio) costoComplementos += 150;
 
-        const servicio = document.getElementById("servicio").value;
-        if (servicio === "completo") presupuesto += 50;
+        let presupuesto = costoBase + costoComplementos;
 
-        const urgencia = document.querySelector('input[name="urgencia"]:checked').value;
-        if (urgencia === "media") presupuesto += 20;
-        else if (urgencia === "alta") presupuesto += 50;
+        // Si el cliente es particular, se añade el 21% de IVA
+        if (tipoCliente === 'particular') {
+            presupuesto *= 1.21;
+        }
 
-        alert("El presupuesto final es: " + presupuesto + "€");
+        alert(`El presupuesto estimado es: $${presupuesto.toFixed(2)}`);
     }
+
+    botonFinalizar.addEventListener("click", function(e) {
+        e.preventDefault();
+        if (validarCampos()) {
+            calcularPresupuesto();
+        }
+    });
+
+    mostrarPaso();
 });
